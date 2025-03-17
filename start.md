@@ -10,6 +10,10 @@ cp .env.example .env
 # Tạo key ứng dụng
 php artisan key:generate
 
+php artisan storage:link
+
+php artisan migrate:refresh --seed
+
 # Chạy lệnh yarn
 yarn install
 
