@@ -3,63 +3,101 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\NguoiDung;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class NguoiDungController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $nguoiDungs = NguoiDung::latest()->paginate(10);
+        return view('admin.nguoi-dung.index', compact('nguoiDungs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.nguoi-dung.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'ten' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:nguoi_dung',
+            'mat_khau' => 'required|string|min:6',
+            'so_dien_thoai' => 'required|string|max:20',
+            'dia_chi' => 'required|string|max:255',
+            'vai_tro' => 'required|in:admin,user',
+        ]);
+
+        NguoiDung::create([
+            'ten' => $request->ten,
+            'email' => $request->email,
+            'mat_khau' => Hash::make($request->mat_khau),
+            'so_dien_thoai' => $request->so_dien_thoai,
+            'dia_chi' => $request->dia_chi,
+            'vai_tro' => $request->vai_tro,
+        ]);
+
+        return redirect()->route('admin.nguoi-dung.index')
+            ->with('success', 'Thêm người dùng thành công.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(NguoiDung $nguoiDung)
     {
-        //
+        return view('admin.nguoi-dung.show', compact('nguoiDung'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(NguoiDung $nguoiDung)
     {
-        //
+        return view('admin.nguoi-dung.edit', compact('nguoiDung'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, NguoiDung $nguoiDung)
     {
-        //
+        $request->validate([
+            'ten' => 'required|string|max:255',
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('nguoi_dung')->ignore($nguoiDung->id)],
+            'mat_khau' => 'nullable|string|min:6',
+            'so_dien_thoai' => 'required|string|max:20',
+            'dia_chi' => 'required|string|max:255',
+            'vai_tro' => 'required|in:admin,user',
+        ]);
+
+        $data = [
+            'ten' => $request->ten,
+            'email' => $request->email,
+            'so_dien_thoai' => $request->so_dien_thoai,
+            'dia_chi' => $request->dia_chi,
+            'vai_tro' => $request->vai_tro,
+        ];
+
+        if ($request->filled('mat_khau')) {
+            $data['mat_khau'] = Hash::make($request->mat_khau);
+        }
+
+        $nguoiDung->update($data);
+
+        return redirect()->route('admin.nguoi-dung.index')
+            ->with('success', 'Cập nhật người dùng thành công.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(NguoiDung $nguoiDung)
     {
-        //
+        try {
+            if ($nguoiDung->isAdmin() && NguoiDung::where('vai_tro', 'admin')->count() <= 1) {
+                return redirect()->route('admin.nguoi-dung.index')
+                    ->with('error', 'Không thể xóa admin cuối cùng.');
+            }
+
+            $nguoiDung->delete();
+            return redirect()->route('admin.nguoi-dung.index')
+                ->with('success', 'Xóa người dùng thành công.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.nguoi-dung.index')
+                ->with('error', 'Không thể xóa người dùng này.');
+        }
     }
 }
