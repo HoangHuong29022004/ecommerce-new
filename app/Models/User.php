@@ -12,15 +12,20 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = 'nguoi_dung';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'ten',
         'email',
         'password',
+        'so_dien_thoai',
+        'dia_chi',
+        'la_admin',
     ];
 
     /**
@@ -43,6 +48,12 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'la_admin' => 'boolean',
         ];
+    }
+
+    public function donHang()
+    {
+        return $this->hasMany(DonHang::class, 'nguoi_dung_id');
     }
 }

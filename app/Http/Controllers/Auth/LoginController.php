@@ -36,6 +36,30 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'ten' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = NguoiDung::create([
+            'ten' => $request->ten,
+            'email' => $request->email,
+            'mat_khau' => Hash::make($request->password),
+        ]);
+
+        Auth::login($user);
+        $request->session()->regenerate();
+    }
+
+
     public function logout(Request $request)
     {
         Auth::logout();

@@ -13,11 +13,9 @@ class SanPham extends Model
 
     protected $fillable = [
         'ten_san_pham',
-        'slug',
         'danh_muc_id',
         'mo_ta',
         'gia',
-        'so_luong',
         'anh_dai_dien',
         'hien_thi',
         'noi_bat',
@@ -27,7 +25,6 @@ class SanPham extends Model
         'hien_thi' => 'boolean',
         'noi_bat' => 'boolean',
         'gia' => 'integer',
-        'so_luong' => 'integer',
     ];
 
     public function danhMuc()
@@ -38,5 +35,10 @@ class SanPham extends Model
     public function anhPhu()
     {
         return $this->hasMany(AnhPhuSanPham::class, 'san_pham_id');
+    }
+
+    public function chiTietDonHang()
+    {
+        return $this->hasMany(ChiTietDonHang::class, 'san_pham_id');
     }
 }
