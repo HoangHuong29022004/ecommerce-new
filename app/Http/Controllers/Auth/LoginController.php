@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\NguoiDung;
 
 class LoginController extends Controller
 {
@@ -20,7 +22,10 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $user = NguoiDung::where('email', $credentials['email'])->first();
+
+        if ($user && Hash::check($credentials['password'], $user->mat_khau)) {
+            Auth::login($user);
             $request->session()->regenerate();
 
             return redirect()->intended(route('admin.dashboard'));

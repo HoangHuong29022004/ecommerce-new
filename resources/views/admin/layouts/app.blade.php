@@ -23,24 +23,40 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-8">
-            <div class="mb-6">
-                <h2 class="text-3xl font-bold">@yield('header')</h2>
+        <main class="flex-1">
+            <!-- Top Navigation -->
+            <div class="bg-white shadow">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <div class="flex items-center">
+                            <h2 class="text-2xl font-bold">@yield('header')</h2>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-700 mr-4">{{ Auth::user()->ten }}</span>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="text-red-600 hover:text-red-800">Đăng xuất</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            @if(session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                    <span class="block sm:inline">{{ session('success') }}</span>
-                </div>
-            @endif
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                @if(session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                    </div>
+                @endif
 
-            @if(session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                    <span class="block sm:inline">{{ session('error') }}</span>
-                </div>
-            @endif
+                @if(session('error'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">{{ session('error') }}</span>
+                    </div>
+                @endif
 
-            @yield('content')
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>

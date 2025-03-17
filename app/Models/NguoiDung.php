@@ -31,6 +31,11 @@ class NguoiDung extends Authenticatable
         return $this->mat_khau;
     }
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['mat_khau'] = bcrypt($value);
+    }
+
     public function isAdmin()
     {
         return $this->vai_tro === 'admin';
