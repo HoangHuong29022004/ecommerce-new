@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\NguoiDung;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,19 +13,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Xóa hoặc bình luận dòng này nếu có
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
 
         $this->call([
             AdminSeeder::class,
         ]);
 
         // Tạo 10 người dùng mẫu
-        \App\Models\NguoiDung::factory(10)->create();
+        NguoiDung::factory(10)->create();
 
         // Tạo 5 danh mục mẫu
         \App\Models\DanhMuc::factory(5)->create();
