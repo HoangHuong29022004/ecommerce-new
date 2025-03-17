@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class NguoiDung extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasFactory;
 
     protected $table = 'nguoi_dung';
 
@@ -18,12 +19,12 @@ class NguoiDung extends Authenticatable
         'mat_khau',
         'so_dien_thoai',
         'dia_chi',
-        'vai_tro',
+        'vai_tro'
     ];
 
     protected $hidden = [
         'mat_khau',
-        'remember_token',
+        'remember_token'
     ];
 
     public function getAuthPassword()

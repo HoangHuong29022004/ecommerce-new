@@ -20,13 +20,17 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 // Admin routes
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('admin.dashboard');
     })->name('dashboard');
 
     Route::resource('danh-muc', DanhMucController::class);
     Route::resource('san-pham', SanPhamController::class);
-    Route::resource('don-hang', DonHangController::class);
     Route::resource('nguoi-dung', NguoiDungController::class);
+    
+    // Quản lý đơn hàng
+    Route::get('don-hang', [DonHangController::class, 'index'])->name('don-hang.index');
+    Route::get('don-hang/{donHang}', [DonHangController::class, 'show'])->name('don-hang.show');
+    Route::put('don-hang/{donHang}/trang-thai', [DonHangController::class, 'updateTrangThai'])->name('don-hang.update-trang-thai');
 });
