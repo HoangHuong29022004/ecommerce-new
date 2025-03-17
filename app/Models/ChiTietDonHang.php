@@ -16,12 +16,20 @@ class ChiTietDonHang extends Model
         'san_pham_id',
         'so_luong',
         'don_gia',
+        'thanh_tien'
     ];
 
     protected $casts = [
-        'so_luong' => 'integer',
-        'don_gia' => 'integer',
+        'don_gia' => 'decimal:2',
+        'thanh_tien' => 'decimal:2'
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($chiTietDonHang) {
+            $chiTietDonHang->thanh_tien = $chiTietDonHang->so_luong * $chiTietDonHang->don_gia;
+        });
+    }
 
     public function donHang()
     {

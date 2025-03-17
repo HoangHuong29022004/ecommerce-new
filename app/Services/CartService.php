@@ -23,6 +23,7 @@ class CartService
         } else {
             $cart[$productId] = [
                 'id' => $product->id,
+                'slug' => $product->slug,
                 'name' => $product->ten_san_pham,
                 'price' => $product->gia,
                 'quantity' => $quantity,

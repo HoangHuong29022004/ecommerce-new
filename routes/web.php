@@ -56,7 +56,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // User routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/danh-muc/{slug}', [CategoryController::class, 'show'])->name('category');
-Route::get('/san-pham/{id}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/san-pham/{slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/tim-kiem', [SearchController::class, 'index'])->name('search');
 
 // Cart routes

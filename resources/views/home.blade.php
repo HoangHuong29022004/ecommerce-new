@@ -32,7 +32,7 @@
             <div class="mt-4 flex justify-between">
                 <div>
                     <h3 class="text-sm text-gray-700">
-                        <a href="{{ route('products.show', $product->id) }}">
+                        <a href="{{ route('products.show', $product->slug) }}">
                             {{ $product->ten_san_pham }}
                         </a>
                     </h3>
@@ -59,7 +59,7 @@
             <div class="mt-4 flex justify-between">
                 <div>
                     <h3 class="text-sm text-gray-700">
-                        <a href="{{ route('products.show', $product->id) }}">
+                        <a href="{{ route('products.show', $product->slug) }}">
                             {{ $product->ten_san_pham }}
                         </a>
                     </h3>

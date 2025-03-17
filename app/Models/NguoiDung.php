@@ -27,6 +27,11 @@ class NguoiDung extends Authenticatable
         'remember_token'
     ];
 
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'mat_khau' => 'hashed',
+    ];
+
     public function getAuthPassword()
     {
         return $this->mat_khau;
@@ -42,7 +47,7 @@ class NguoiDung extends Authenticatable
         return $this->vai_tro === 'admin';
     }
 
-    public function donHangs()
+    public function donHang()
     {
         return $this->hasMany(DonHang::class, 'nguoi_dung_id');
     }

@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function show($id)
+    public function show($slug)
     {
         $product = SanPham::with(['danhMuc', 'anhPhu'])
             ->where('hien_thi', true)
-            ->findOrFail($id);
+            ->where('slug', $slug)
+            ->firstOrFail();
 
         $relatedProducts = SanPham::where('danh_muc_id', $product->danh_muc_id)
             ->where('id', '!=', $product->id)

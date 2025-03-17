@@ -55,7 +55,7 @@ class OrderController extends Controller
             $order->chiTietDonHang()->create([
                 'san_pham_id' => $item['id'],
                 'so_luong' => $item['quantity'],
-                'don_gia' => $item['price'],
+                'don_gia' => $item['price']
             ]);
         }
 
