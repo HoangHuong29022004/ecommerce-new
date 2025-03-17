@@ -15,7 +15,7 @@
 
 @layer components {
     .btn {
-        @apply px-4 py-2 rounded-md font-medium transition-colors duration-200;
+        @apply px-4 py-2 rounded-md font-medium transition-colors duration-200 inline-flex items-center;
     }
     .btn-primary {
         @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
@@ -32,7 +32,20 @@
     .form-label {
         @apply block text-sm font-medium text-gray-700;
     }
+    .form-label.required:after {
+        content: "*";
+        @apply text-red-500 ml-1;
+    }
     .form-checkbox {
         @apply rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50;
+    }
+    .table-actions {
+        @apply flex items-center space-x-2;
+    }
+    .table-actions a, .table-actions button {
+        @apply flex items-center;
+    }
+    .table-actions i {
+        @apply mr-1;
     }
 }

@@ -8,7 +8,9 @@
     <div class="bg-white rounded-lg shadow-lg p-6">
         <div class="flex justify-between items-center mb-6">
             <h3 class="text-xl font-semibold">Danh sách danh mục</h3>
-            <a href="{{ route('admin.danh-muc.create') }}" class="btn btn-primary">Thêm danh mục</a>
+            <a href="{{ route('admin.danh-muc.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Thêm danh mục
+            </a>
         </div>
 
         <div class="overflow-x-auto">
@@ -34,11 +36,15 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <a href="{{ route('admin.danh-muc.edit', $danhMuc->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Sửa</a>
+                                <a href="{{ route('admin.danh-muc.edit', $danhMuc->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                    <i class="fas fa-edit"></i> Sửa
+                                </a>
                                 <form action="{{ route('admin.danh-muc.destroy', $danhMuc->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
+                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
+                                        <i class="fas fa-trash"></i> Xóa
+                                    </button>
                                 </form>
                             </td>
                         </tr>

@@ -34,6 +34,7 @@ class DanhMucController extends Controller
         $request->validate([
             'ten_danh_muc' => 'required|max:255|unique:danh_muc,ten_danh_muc',
             'mo_ta' => 'nullable',
+            'hien_thi' => 'boolean',
         ]);
 
         DanhMuc::create([
@@ -71,6 +72,7 @@ class DanhMucController extends Controller
         $request->validate([
             'ten_danh_muc' => 'required|max:255|unique:danh_muc,ten_danh_muc,' . $danhMuc->id,
             'mo_ta' => 'nullable',
+            'hien_thi' => 'boolean',
         ]);
 
         $danhMuc->update([
@@ -89,9 +91,13 @@ class DanhMucController extends Controller
      */
     public function destroy(DanhMuc $danhMuc)
     {
-        $danhMuc->delete();
-
-        return redirect()->route('admin.danh-muc.index')
-            ->with('success', 'Xóa danh mục thành công.');
+        try {
+            $danhMuc->delete();
+            return redirect()->route('admin.danh-muc.index')
+                ->with('success', 'Xóa danh mục thành công.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.danh-muc.index')
+                ->with('error', 'Không thể xóa danh mục này vì có sản phẩm liên quan.');
+        }
     }
 }
