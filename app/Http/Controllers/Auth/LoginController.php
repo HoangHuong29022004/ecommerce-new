@@ -45,7 +45,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'ten' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:nguoi_dung,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -57,8 +57,9 @@ class LoginController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
-    }
 
+        return redirect()->intended(route('admin.dashboard'));
+    }
 
     public function logout(Request $request)
     {
