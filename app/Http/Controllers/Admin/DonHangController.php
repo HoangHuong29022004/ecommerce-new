@@ -13,7 +13,7 @@ class DonHangController extends Controller
      */
     public function index()
     {
-        $donHangs = DonHang::with(['nguoiDung', 'chiTietDonHangs.sanPham'])
+        $donHangs = DonHang::with(['nguoiDung', 'chiTietDonHang.sanPham'])
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         return view('admin.don-hang.index', compact('donHangs'));
@@ -40,7 +40,7 @@ class DonHangController extends Controller
      */
     public function show(DonHang $donHang)
     {
-        $donHang->load(['nguoiDung', 'chiTietDonHangs.sanPham']);
+        $donHang->load(['nguoiDung', 'chiTietDonHang.sanPham']);
         return view('admin.don-hang.show', compact('donHang'));
     }
 

@@ -9,13 +9,26 @@
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-semibold">Danh sách đơn hàng</h2>
         </div>
+        @if (session('success'))
+            <div class="mx-4 mt-4 px-4 py-2 bg-green-50 border border-green-200 rounded-md">
+                <p class="text-sm text-green-600">{{ session('success') }}</p>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="mx-4 mt-4 px-4 py-2 bg-red-50 border border-red-200 rounded-md">
+                <p class="text-sm text-red-600">{{ session('error') }}</p>
+            </div>
+        @endif
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mã ĐH</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Khách hàng
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mã ĐH
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Khách
+                            hàng
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tổng tiền
                         </th>

@@ -137,7 +137,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            @foreach($donHang->chiTietDonHangs as $chiTiet)
+                            @foreach($donHang->chiTietDonHang as $chiTiet)
                             <tr>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center">
