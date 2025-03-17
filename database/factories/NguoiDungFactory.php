@@ -20,7 +20,7 @@ class NguoiDungFactory extends Factory
         return [
             'ten' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'mat_khau' => bcrypt('password'), // password
+            'mat_khau' => bcrypt('123456789'),
             'so_dien_thoai' => fake()->phoneNumber(),
             'dia_chi' => fake()->address(),
             'vai_tro' => 'user',
