@@ -14,7 +14,7 @@ class DonHangController extends Controller
     public function index()
     {
         $donHangs = DonHang::with(['nguoiDung', 'chiTietDonHangs.sanPham'])
-            ->latest()
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
         return view('admin.don-hang.index', compact('donHangs'));
     }
@@ -70,14 +70,28 @@ class DonHangController extends Controller
 
     public function updateTrangThai(Request $request, DonHang $donHang)
     {
+        // Kiểm tra nếu đơn hàng đã hủy thì không cho cập nhật
+        if ($donHang->trang_thai === 'da_huy') {
+            return back()->with('error', 'Không thể thay đổi trạng thái của đơn hàng đã hủy!');
+        }
+
         $request->validate([
             'trang_thai' => 'required|in:cho_xac_nhan,da_xac_nhan,dang_giao,da_giao,da_huy',
         ]);
+
+        // Nếu đơn hàng đã giao thì không cho cập nhật sang trạng thái khác trừ hủy
+        if ($donHang->trang_thai === 'da_giao' && $request->trang_thai !== 'da_huy') {
+            return back()->with('error', 'Không thể thay đổi trạng thái của đơn hàng đã giao!');
+        }
 
         $donHang->update([
             'trang_thai' => $request->trang_thai,
         ]);
 
-        return redirect()->back()->with('success', 'Cập nhật trạng thái đơn hàng thành công.');
+        $message = $request->trang_thai === 'da_huy' 
+            ? 'Hủy đơn hàng thành công!' 
+            : 'Cập nhật trạng thái đơn hàng thành công!';
+
+        return back()->with('success', $message);
     }
 }

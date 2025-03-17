@@ -16,8 +16,8 @@ class AdminSeeder extends Seeder
     {
         NguoiDung::create([
             'ten' => 'Admin',
-            'email' => 'admin@example.com',
-            'mat_khau' => Hash::make('password'),
+            'email' => 'admin@gmail.com',
+            'mat_khau' => Hash::make('123456789'),
             'vai_tro' => 'admin',
         ]);
     }

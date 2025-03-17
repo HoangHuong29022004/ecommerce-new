@@ -30,7 +30,7 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::resource('nguoi-dung', NguoiDungController::class);
     
     // Quản lý đơn hàng
-    Route::get('don-hang', [DonHangController::class, 'index'])->name('don-hang.index');
-    Route::get('don-hang/{donHang}', [DonHangController::class, 'show'])->name('don-hang.show');
-    Route::put('don-hang/{donHang}/trang-thai', [DonHangController::class, 'updateTrangThai'])->name('don-hang.update-trang-thai');
+    Route::get('/don-hang', [DonHangController::class, 'index'])->name('don-hang.index');
+    Route::get('/don-hang/{donHang}', [DonHangController::class, 'show'])->name('don-hang.show');
+    Route::put('/don-hang/{donHang}/trang-thai', [DonHangController::class, 'updateTrangThai'])->name('don-hang.update-trang-thai');
 });
