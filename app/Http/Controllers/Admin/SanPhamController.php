@@ -49,12 +49,12 @@ class SanPhamController extends Controller
         $anhDaiDien = $request->file('anh_dai_dien')->store('san-pham', 'public');
 
         $sanPham = SanPham::create([
-            'ten_san_pham' => $request->ten_san_pham,
-            'slug' => Str::slug($request->ten_san_pham),
-            'danh_muc_id' => $request->danh_muc_id,
-            'mo_ta' => $request->mo_ta,
-            'gia' => $request->gia,
-            'so_luong' => $request->so_luong,
+            'ten_san_pham' => $request->input('ten_san_pham'),
+            'slug' => Str::slug($request->input('ten_san_pham')),
+            'danh_muc_id' => $request->input('danh_muc_id'),
+            'mo_ta' => $request->input('mo_ta'),
+            'gia' => $request->input('gia'),
+            'so_luong' => $request->input('so_luong'),
             'anh_dai_dien' => $anhDaiDien,
             'hien_thi' => $request->has('hien_thi'),
             'noi_bat' => $request->has('noi_bat'),
@@ -108,12 +108,12 @@ class SanPhamController extends Controller
         ]);
 
         $data = [
-            'ten_san_pham' => $request->ten_san_pham,
-            'slug' => Str::slug($request->ten_san_pham),
-            'danh_muc_id' => $request->danh_muc_id,
-            'mo_ta' => $request->mo_ta,
-            'gia' => $request->gia,
-            'so_luong' => $request->so_luong,
+            'ten_san_pham' => $request->input('ten_san_pham'),
+            'slug' => Str::slug($request->input('ten_san_pham')),
+            'danh_muc_id' => $request->input('danh_muc_id'),
+            'mo_ta' => $request->input('mo_ta'),
+            'gia' => $request->input('gia'),
+            'so_luong' => $request->input('so_luong'),
             'hien_thi' => $request->has('hien_thi'),
             'noi_bat' => $request->has('noi_bat'),
         ];
@@ -127,7 +127,7 @@ class SanPhamController extends Controller
 
         // Xử lý xóa ảnh phụ
         if ($request->has('xoa_anh_phu')) {
-            foreach ($request->xoa_anh_phu as $anhPhuId) {
+            foreach ($request->input('xoa_anh_phu') as $anhPhuId) {
                 $anhPhu = $sanPham->anhPhu()->find($anhPhuId);
                 if ($anhPhu) {
                     Storage::disk('public')->delete($anhPhu->duong_dan);
